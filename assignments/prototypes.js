@@ -48,7 +48,7 @@ CharacterStats.prototype.takeDamage = function() {
   * should inherit takeDamage() from CharacterStats
 */
 function Humanoid(attributes) {
-  CharacterStats.call(this, attributes)
+  CharacterStats.call(this, attributes);
   this.team = attributes.team;
   this.weapons = attributes.weapons;
   this.language = attributes.language;
@@ -58,6 +58,93 @@ Humanoid.prototype.greet = function() {
   return `${this.name} offers a greeting in ${this.language}.`
 }
  
+//stretch
+/* Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
+  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+*/
+function Villain(attributes) {
+  Humanoid.call(this, attributes);
+  this.typeofVillain = attributes.typeofVillain;
+}
+Villain.prototype = Object.create(Humanoid.prototype)
+Villain.prototype.fight = function(){
+  return `${this.typeofVillain} named ${this.name} wants to fight.`
+}
+Villain.prototype.slay = function(){
+  let result = ' ';
+  let i = this.healthPoints;
+  do {
+      i -= 1;
+      result += i + ' ';
+  } while (i > 0);
+  return `Destroyed.`
+}
+
+function Hero(attributes) {
+  Humanoid.call(this, attributes);
+  this.typeofHero = attributes.typeofHero;
+}
+Hero.prototype = Object.create(Humanoid.prototype);
+Villain.prototype.vanquish = function(){
+  let count = 0;
+  return function(){
+    count = count + 1;
+    return count;
+  }
+}
+
+const vampire = new Villain({
+  typeofVillain: 'vampire',
+  createdAt: new Date(),
+  dimensions: {
+    length: 5,
+    width: 5,
+    height: 3,
+  },
+  healthPoints: 20,
+  name: 'Edward',
+  team: 'bad guys',
+  weapons: ['fangs'],
+  language: 'transylvanian'
+
+});
+
+const werewolf = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 7,
+    width: 4,
+    height: 3,
+  },
+  healthPoints: 20,
+  name: 'Wolfie',
+  team: 'good guys',
+  weapons: ['wolf speed', 'bigger fangs'],
+  language: 'howls'
+
+});
+// console.log(werewolf.language);
+console.log(vampire.fight())
+// console.log(werewolf.greet());
+// console.log(vanquish());
+// let result = ' ';
+// let i = healthPoints;
+// do {
+//   i -= 1;
+//   result += i + ' ';
+// } while (i > 0);
+// const counter = () => {
+//   // Return a function that when invoked increments and returns a counter variable.
+//   let count = 0;
+//   return function(){
+//     count = count + 1;
+//     return count;
+//   }
+// };
+// const newCounter = counter();
+// console.log(newCounter())
+// console.log(newCounter())
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -66,7 +153,7 @@ Humanoid.prototype.greet = function() {
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-
+/*
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -127,7 +214,7 @@ Humanoid.prototype.greet = function() {
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-
+*/
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
